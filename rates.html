@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exchange Rates</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('/images/Background.png') no-repeat center center fixed;
+            background-size: cover;
+        }
+        .navbar-brand img {
+            height: 40px;
+        }
+        .card {
+            margin-top: 50px;
+        }
+        .card-body {
+            padding: 20px;
+        }
+        canvas {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: aliceblue;">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="home.html">
+                <img src="/images/RemitEase logo.png" alt="Remitease Logo"> REMITEASE
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="features.html">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="rates.html">Rates</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="help.html">Help</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="offcanvas" data-bs-target="#languageOffcanvas" aria-controls="languageOffcanvas" id="languageSelector">EN</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.html">Log In</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="register.html">Register</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Offcanvas for Language and Location -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="languageOffcanvas" aria-labelledby="languageOffcanvasLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="languageOffcanvasLabel">Select Location and Language</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <form id="languageForm">
+                <div class="mb-3">
+                    <label for="languageSelect" class="form-label">Select your language</label>
+                    <select class="form-select" id="languageSelect">
+                        <option value="en-US">English (US)</option>
+                        <option value="zh-CN">Chinese (Simplified)</option>
+                        <option value="ja-JP">Japanese</option>
+                        <option value="ko-KR">Korean</option>
+                        <option value="th-TH">Thai</option>
+                        <option value="id-ID">Indonesian</option>
+                        <option value="bn-BD">Bengali</option>
+                        <option value="hi-IN">Hindi</option>
+                        <option value="ta-LK">Tamil (Sri Lanka)</option>
+                        <option value="tl-PH">Filipino</option>
+                        <option value="pl-PL">Polish</option>
+                        <option value="ru-RU">Russian</option>
+                        <option value="fa-IR">Persian</option>
+                        <option value="tr-TR">Turkish</option>
+                        <option value="uk-UA">Ukrainian</option>
+                        <option value="ps-AF">Pashto</option>
+                        <option value="ar-IQ">Arabic (Iraq)</option>
+                        <option value="ur-PK">Urdu</option>
+                        <option value="uz-UZ">Uzbek</option>
+                        <option value="be-BY">Belarusian</option>
+                        <option value="ar-SY">Arabic (Syria)</option>
+                        <option value="ar-KW">Arabic (Kuwait)</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="locationSelect" class="form-label">Select your location</label>
+                    <select class="form-select" id="locationSelect">
+                        <option value="SG">Singapore</option>
+                        <option value="MY">Malaysia</option>
+                        <option value="TH">Thailand</option>
+                        <option value="JP">Japan</option>
+                        <option value="KR">Korea</option>
+                        <option value="CN">China</option>
+                        <option value="BD">Bangladesh</option>
+                        <option value="IN">India</option>
+                        <option value="ID">Indonesia</option>
+                        <option value="LK">Sri Lanka</option>
+                        <option value="PH">Philippines</option>
+                        <option value="PL">Poland</option>
+                        <option value="RU">Russia</option>
+                        <option value="IR">Iran</option>
+                        <option value="TR">Türkiye</option>
+                        <option value="UA">Ukraine</option>
+                        <option value="AF">Afghanistan</option>
+                        <option value="IQ">Iraq</option>
+                        <option value="PK">Pakistan</option>
+                        <option value="UZ">Uzbekistan</option>
+                        <option value="BY">Belarus</option>
+                        <option value="SY">Syria</option>
+                        <option value="KW">Kuwait</option>
+                    </select>
+                </div>
+                <button type="button" class="btn btn-primary" id="confirmChanges">Confirm Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Exchange Rates (0.3% total Fee)</h5>
+                <form id="exchangeRateForm">
+                    <div class="mb-3">
+                        <label for="fromCurrency" class="form-label">From Currency</label>
+                        <select class="form-select" id="fromCurrency">
+                            <option value="USD">USD</option>
+                            <option value="EUR">EUR</option>
+                            <option value="GBP">GBP</option>
+                            <option value="JPY">JPY</option>
+                            <option value="SGD">SGD</option>
+                            <option value="IDR">IDR</option>
+                            <option value="INR">INR</option>
+                            <option value="PHP">PHP</option>
+                            <option value="THB">THB</option>
+                            <option value="PLN">PLN</option>
+                            <option value="RUB">RUB</option>
+                            <option value="IRR">IRR</option>
+                            <option value="TRY">TRY</option>
+                            <option value="UAH">UAH</option>
+                            <option value="AFN">AFN</option>
+                            <option value="IQD">IQD</option>
+                            <option value="PKR">PKR</option>
+                            <option value="UZS">UZS</option>
+                            <option value="BYN">BYN</option>
+                            <option value="SYP">SYP</option>
+                            <option value="KWD">KWD</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="toCurrency" class="form-label">To Currency</label>
+                        <select class="form-select" id="toCurrency">
+                            <option value="USD">USD</option>
+                            <option value="EUR">EUR</option>
+                            <option value="GBP">GBP</option>
+                            <option value="JPY">JPY</option>
+                            <option value="SGD">SGD</option>
+                            <option value="IDR">IDR</option>
+                            <option value="INR">INR</option>
+                            <option value="PHP">PHP</option>
+                            <option value="THB">THB</option>
+                            <option value="PLN">PLN</option>
+                            <option value="RUB">RUB</option>
+                            <option value="IRR">IRR</option>
+                            <option value="TRY">TRY</option>
+                            <option value="UAH">UAH</option>
+                            <option value="AFN">AFN</option>
+                            <option value="IQD">IQD</option>
+                            <option value="PKR">PKR</option>
+                            <option value="UZS">UZS</option>
+                            <option value="BYN">BYN</option>
+                            <option value="SYP">SYP</option>
+                            <option value="KWD">KWD</option>
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn-primary" id="getExchangeRate">Get Exchange Rate</button>
+                </form>
+                <div id="exchangeRateResult" class="mt-4"></div>
+                <canvas id="exchangeRateChart" class="mt-4"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    const languageSelector = document.getElementById('languageSelector');
+    const languageSelect = document.getElementById('languageSelect');
+    const locationSelect = document.getElementById('locationSelect');
+    const confirmChangesButton = document.getElementById('confirmChanges');
+    const languageOffcanvas = document.getElementById('languageOffcanvas');
+
+    // Load saved language and location from localStorage
+    const savedLanguage = localStorage.getItem('selectedLanguage');
+    const savedLocation = localStorage.getItem('selectedLocation');
+
+    if (savedLanguage) {
+      languageSelect.value = savedLanguage;
+      languageSelector.innerText = savedLanguage === 'en-UK' ? 'EN (UK)' : 'EN (US)';
+    }
+    if (savedLocation) {
+      locationSelect.value = savedLocation;
+    }
+
+    // Reset language and location to last confirmed values when the offcanvas is opened
+    languageOffcanvas.addEventListener('show.bs.offcanvas', function () {
+      if (savedLanguage) {
+        languageSelect.value = savedLanguage;
+      }
+      if (savedLocation) {
+        locationSelect.value = savedLocation;
+      }
+    });
+
+    confirmChangesButton.addEventListener('click', function() {
+      const selectedLanguage = languageSelect.value;
+      const selectedLocation = locationSelect.value;
+
+      if (selectedLanguage !== 'en-US') {
+        alert('Only English (US) is currently available.');
+        languageSelect.value = 'en-US'; // Default to English (UK)
+      } else {
+        // Save selected language and location to localStorage
+        localStorage.setItem('selectedLanguage', selectedLanguage);
+        localStorage.setItem('selectedLocation', selectedLocation);
+
+        // Update language selector text
+        languageSelector.innerText = selectedLanguage === 'en-US' ? 'EN (US)' : 'EN (US)';
+
+        // Alert the user of the successful change
+        alert('Language and location successfully changed.');
+
+        // Redirect to homepage
+        window.location.href = 'rates.html';
+      }
+    });
+  });
+
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const fromCurrencySelect = document.getElementById('fromCurrency');
+    const toCurrencySelect = document.getElementById('toCurrency');
+    const getExchangeRateButton = document.getElementById('getExchangeRate');
+    const exchangeRateResult = document.getElementById('exchangeRateResult');
+    const exchangeRateChart = document.getElementById('exchangeRateChart');
+    let chart;
+
+            const exchangeRates = {
+                'USD': { 'EUR': 0.86, 'GBP': 0.74, 'JPY': 138.83, 'SGD': 1.34, 'IDR': 15080, 'INR': 82.18, 'PHP': 54.35, 'THB': 34.49, 'PLN': 4.06, 'RUB': 90.30, 'IRR': 42200, 'TRY': 27.16, 'UAH': 36.94, 'AFN': 84.50, 'IQD': 1310, 'PKR': 278.50, 'UZS': 12214, 'BYN': 3.23, 'SYP': 2512, 'KWD': 0.31 },
+                'EUR': { 'USD': 1.17, 'GBP': 0.86, 'JPY': 161.85, 'SGD': 1.56, 'IDR': 17489, 'INR': 95.82, 'PHP': 63.33, 'THB': 40.20, 'PLN': 4.72, 'RUB': 105.05, 'IRR': 49020, 'TRY': 31.52, 'UAH': 42.88, 'AFN': 98.15, 'IQD': 1521, 'PKR': 323.15, 'UZS': 14169, 'BYN': 3.74, 'SYP': 2909, 'KWD': 0.36 },
+                'GBP': { 'USD': 1.35, 'EUR': 1.17, 'JPY': 188.62, 'SGD': 1.82, 'IDR': 20434, 'INR': 111.88, 'PHP': 73.92, 'THB': 46.90, 'PLN': 5.52, 'RUB': 122.80, 'IRR': 57250, 'TRY': 36.81, 'UAH': 50.13, 'AFN': 114.81, 'IQD': 1779, 'PKR': 377.52, 'UZS': 16549, 'BYN': 4.37, 'SYP': 3401, 'KWD': 0.42 },
+                'JPY': { 'USD': 0.0072, 'EUR': 0.0062, 'GBP': 0.0053, 'SGD': 0.0097, 'IDR': 108.43, 'INR': 0.59, 'PHP': 0.39, 'THB': 0.25, 'PLN': 0.029, 'RUB': 0.65, 'IRR': 303, 'TRY': 0.20, 'UAH': 0.27, 'AFN': 0.61, 'IQD': 9.43, 'PKR': 1.98, 'UZS': 87.90, 'BYN': 0.023, 'SYP': 18.02, 'KWD': 0.0022 },
+                'SGD': { 'USD': 0.74, 'EUR': 0.64, 'GBP': 0.55, 'JPY': 103.13, 'IDR': 15080, 'INR': 60.70, 'PHP': 40.90, 'THB': 26.22, 'PLN': 2.93, 'RUB': 68.38, 'IRR': 31840, 'TRY': 6.48, 'UAH': 19.31, 'AFN': 53.23, 'IQD': 785, 'PKR': 110.84, 'UZS': 7462, 'BYN': 1.93, 'SYP': 1502, 'KWD': 0.22 },
+                'IDR': { 'USD': 0.000066, 'EUR': 0.000057, 'GBP': 0.000049, 'JPY': 0.0092, 'SGD': 0.000097, 'INR': 0.0051, 'PHP': 0.0034, 'THB': 0.0022, 'PLN': 0.00025, 'RUB': 0.0051, 'IRR': 2.12, 'TRY': 0.00043, 'UAH': 0.0014, 'AFN': 0.0048, 'IQD': 0.090, 'PKR': 0.017, 'UZS': 0.89, 'BYN': 0.00017, 'SYP': 0.052, 'KWD': 0.000019 },
+                'INR': { 'USD': 0.012, 'EUR': 0.0104, 'GBP': 0.0089, 'JPY': 0.15, 'SGD': 0.016, 'IDR': 19.87, 'PHP': 0.068, 'THB': 0.042, 'PLN': 0.047, 'RUB': 0.084, 'IRR': 4.74, 'TRY': 0.096, 'UAH': 0.26, 'AFN': 1.02, 'IQD': 19.03, 'PKR': 3.59, 'UZS': 202.65, 'BYN': 0.048, 'SYP': 8.92, 'KWD': 0.0026 },
+                'PHP': { 'USD': 0.018, 'EUR': 0.0158, 'GBP': 0.0135, 'JPY': 0.19, 'SGD': 0.020, 'IDR': 28.30, 'INR': 14.75, 'THB': 0.062, 'PLN': 0.052, 'RUB': 0.098, 'IRR': 5.73, 'TRY': 0.108, 'UAH': 0.31, 'AFN': 1.16, 'IQD': 21.67, 'PKR': 4.90, 'UZS': 276.57, 'BYN': 0.066, 'SYP': 11.24, 'KWD': 0.0023 },
+                'THB': { 'USD': 0.029, 'EUR': 0.025, 'GBP': 0.022, 'JPY': 0.37, 'SGD': 0.042, 'IDR': 42.87, 'INR': 24.36, 'PHP': 16.15, 'PLN': 0.072, 'RUB': 0.13, 'IRR': 7.39, 'TRY': 0.14, 'UAH': 0.42, 'AFN': 1.70, 'IQD': 32.04, 'PKR': 7.20, 'UZS': 394.75, 'BYN': 0.095, 'SYP': 16.09, 'KWD': 0.0065 },
+                'PLN': { 'USD': 0.25, 'EUR': 0.21, 'GBP': 0.19, 'JPY': 3.36, 'SGD': 0.39, 'IDR': 3951, 'INR': 25.73, 'PHP': 18.44, 'THB': 13.94, 'RUB': 1.94, 'IRR': 92.82, 'TRY': 1.81, 'UAH': 5.26, 'AFN': 21.39, 'IQD': 403.18, 'PKR': 89.73, 'UZS': 5010, 'BYN': 1.23, 'SYP': 208.14, 'KWD': 0.058 },
+                'RUB': { 'USD': 0.011, 'EUR': 0.0095, 'GBP': 0.0082, 'JPY': 0.16, 'SGD': 0.019, 'IDR': 218.32, 'INR': 11.47, 'PHP': 8.22, 'THB': 5.15, 'PLN': 0.51, 'IRR': 7.97, 'TRY': 0.69, 'UAH': 1.88, 'AFN': 8.11, 'IQD': 151.95, 'PKR': 33.75, 'UZS': 1870, 'BYN': 0.45, 'SYP': 73.85, 'KWD': 0.0029 },
+                'IRR': { 'USD': 0.000024, 'EUR': 0.000020, 'GBP': 0.000018, 'JPY': 0.00015, 'SGD': 0.000022, 'IDR': 5.10, 'INR': 0.27, 'PHP': 0.19, 'THB': 0.12, 'PLN': 0.013, 'RUB': 0.11, 'TRY': 0.006, 'UAH': 0.016, 'AFN': 0.07, 'IQD': 1.41, 'PKR': 0.31, 'UZS': 17.3, 'BYN': 0.004, 'SYP': 2.12, 'KWD': 0.000008 },
+                'TRY': { 'USD': 0.037, 'EUR': 0.031, 'GBP': 0.027, 'JPY': 0.40, 'SGD': 0.046, 'IDR': 430.32, 'INR': 23.47, 'PHP': 16.85, 'THB': 10.55, 'PLN': 0.95, 'RUB': 1.44, 'IRR': 166.36, 'UAH': 4.07, 'AFN': 17.55, 'IQD': 325.82, 'PKR': 71.84, 'UZS': 4033, 'BYN': 0.98, 'SYP': 161.12, 'KWD': 0.010 },
+                'UAH': { 'USD': 0.027, 'EUR': 0.023, 'GBP': 0.020, 'JPY': 0.32, 'SGD': 0.037, 'IDR': 351.89, 'INR': 19.23, 'PHP': 13.81, 'THB': 8.64, 'PLN': 0.77, 'RUB': 1.17, 'IRR': 134.88, 'TRY': 0.25, 'AFN': 13.12, 'IQD': 245.50, 'PKR': 54.08, 'UZS': 3021, 'BYN': 0.73, 'SYP': 120.32, 'KWD': 0.0071 },
+                'AFN': { 'USD': 0.011, 'EUR': 0.0094, 'GBP': 0.0082, 'JPY': 1.67, 'SGD': 0.019, 'IDR': 94.08, 'INR': 5.15, 'PHP': 3.66, 'THB': 2.29, 'PLN': 0.20, 'RUB': 0.31, 'IRR': 25.80, 'TRY': 0.49, 'UAH': 1.47, 'IQD': 27.55, 'PKR': 6.12, 'UZS': 342.41, 'BYN': 0.083, 'SYP': 13.62, 'KWD': 0.0033 },
+                'IQD': { 'USD': 0.00076, 'EUR': 0.00065, 'GBP': 0.00055, 'JPY': 0.14, 'SGD': 0.00084, 'IDR': 14.58, 'INR': 0.78, 'PHP': 0.56, 'THB': 0.35, 'PLN': 0.032, 'RUB': 0.054, 'IRR': 4.46, 'TRY': 0.081, 'UAH': 0.25, 'AFN': 0.85, 'PKR': 0.18, 'UZS': 25.53, 'BYN': 0.006, 'SYP': 2.97, 'KWD': 0.00015 },
+                'PKR': { 'USD': 0.0036, 'EUR': 0.0031, 'GBP': 0.0026, 'JPY': 0.20, 'SGD': 0.0039, 'IDR': 51.24, 'INR': 0.51, 'PHP': 0.35, 'THB': 0.22, 'PLN': 0.020, 'RUB': 0.036, 'IRR': 2.94, 'TRY': 0.11, 'UAH': 0.27, 'AFN': 0.12, 'IQD': 5.71, 'UZS': 201.90, 'BYN': 0.048, 'SYP': 8.92, 'KWD': 0.00096 },
+                'UZS': { 'USD': 0.000084, 'EUR': 0.000071, 'GBP': 0.000061, 'JPY': 0.014, 'SGD': 0.00010, 'IDR': 6.25, 'INR': 0.53, 'PHP': 0.36, 'THB': 0.22, 'PLN': 0.020, 'RUB': 0.036, 'IRR': 2.85, 'TRY': 0.053, 'UAH': 0.26, 'AFN': 1.08, 'IQD': 16.15, 'PKR': 3.79, 'BYN': 0.92, 'SYP': 1.42, 'KWD': 0.000096 },
+                'BYN': { 'USD': 0.39, 'EUR': 0.32, 'GBP': 0.27, 'JPY': 0.42, 'SGD': 0.47, 'IDR': 353.29, 'INR': 19.23, 'PHP': 13.81, 'THB': 8.64, 'PLN': 0.77, 'RUB': 1.17, 'IRR': 134.88, 'TRY': 0.25, 'UAH': 1.47, 'AFN': 5.97, 'IQD': 115.00, 'PKR': 25.25, 'UZS': 1413.00, 'SYP': 193.47, 'KWD': 0.011 },
+                'SYP': { 'USD': 0.00039, 'EUR': 0.00032, 'GBP': 0.00027, 'JPY': 0.0042, 'SGD': 0.0047, 'IDR': 3.53, 'INR': 0.19, 'PHP': 0.13, 'THB': 0.086, 'PLN': 0.0077, 'RUB': 0.0117, 'IRR': 1.34, 'TRY': 0.025, 'UAH': 0.074, 'AFN': 0.30, 'IQD': 5.75, 'PKR': 1.26, 'UZS': 70.65, 'BYN': 0.017, 'KWD': 0.000096 },
+                'KWD': { 'USD': 3.27, 'EUR': 2.69, 'GBP': 2.27, 'JPY': 359.17, 'SGD': 4.03, 'IDR': 29890, 'INR': 1561.00, 'PHP': 1121.00, 'THB': 704.00, 'PLN': 62.78, 'RUB': 95.00, 'IRR': 10982, 'TRY': 17.40, 'UAH': 42.82, 'AFN': 201.27, 'IQD': 3877, 'PKR': 852.00, 'UZS': 47752, 'BYN': 11.75, 'SYP': 193.47 }
+            };
+
+            getExchangeRateButton.addEventListener('click', function() {
+        const fromCurrency = fromCurrencySelect.value;
+        const toCurrency = toCurrencySelect.value;
+
+        if (fromCurrency === toCurrency) {
+            exchangeRateResult.innerHTML = 'Please select different currencies.';
+            return;
+        }
+
+        const rate = exchangeRates[fromCurrency] && exchangeRates[fromCurrency][toCurrency];
+        
+        if (rate) {
+            exchangeRateResult.innerHTML = `1 ${fromCurrency} = ${rate} ${toCurrency}`;
+
+            // Fetch the rate history for the last 24 hours
+            const now = new Date();
+            const labels = [];
+            const data = [];
+            for (let i = 23; i >= 0; i--) {
+                labels.push(`${now.getHours() - i}:00`);
+                data.push(rate * (1 + Math.random() * 0.02 - 0.01)); // Simulate slight fluctuations
+            }
+
+            // Destroy the previous chart instance if exists
+            if (chart) {
+                chart.destroy();
+            }
+
+            // Create a new chart
+            chart = new Chart(exchangeRateChart, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: `Exchange Rate (${fromCurrency} to ${toCurrency})`,
+                        data: data,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        fill: true,
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Hour'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Exchange Rate'
+                            }
+                        }
+                    }
+                }
+            });
+        } else {
+            exchangeRateResult.innerHTML = 'Exchange rate not available for the selected currencies.';
+        }
+    });
+});
+    </script>
+    
+</body>
+</html>
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RemitEase</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: url('/images/Background.png') no-repeat center center fixed;
+      background-size: cover;
+    }
+    .navbar-brand img {
+      height: 40px;
+    }
+    .feature-container {
+      padding: 50px 0;
+    }
+    .feature-image {
+      max-width: 100%;
+      height: auto;
+    }
+    .feature-text {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light" style="background-color: aliceblue;">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="home.html">
+        <img src="/images/RemitEase logo.png" alt="Remitease Logo"> REMITEASE
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="features.html">Features</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="rates.html">Rates</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="help.html">Help</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-bs-toggle="offcanvas" data-bs-target="#languageOffcanvas" aria-controls="languageOffcanvas" id="languageSelector">EN</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="login.html">Log In</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="register.html">Register</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+    <!-- Offcanvas for Language and Location -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="languageOffcanvas" aria-labelledby="languageOffcanvasLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="languageOffcanvasLabel">Select Location and Language</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <form id="languageForm">
+                <div class="mb-3">
+                    <label for="languageSelect" class="form-label">Select your language</label>
+                    <select class="form-select" id="languageSelect">
+                        <option value="en-US">English (US)</option>
+                        <option value="zh-CN">Chinese (Simplified)</option>
+                        <option value="ja-JP">Japanese</option>
+                        <option value="ko-KR">Korean</option>
+                        <option value="th-TH">Thai</option>
+                        <option value="id-ID">Indonesian</option>
+                        <option value="bn-BD">Bengali</option>
+                        <option value="hi-IN">Hindi</option>
+                        <option value="ta-LK">Tamil (Sri Lanka)</option>
+                        <option value="tl-PH">Filipino</option>
+                        <option value="pl-PL">Polish</option>
+                        <option value="ru-RU">Russian</option>
+                        <option value="fa-IR">Persian</option>
+                        <option value="tr-TR">Turkish</option>
+                        <option value="uk-UA">Ukrainian</option>
+                        <option value="ps-AF">Pashto</option>
+                        <option value="ar-IQ">Arabic (Iraq)</option>
+                        <option value="ur-PK">Urdu</option>
+                        <option value="uz-UZ">Uzbek</option>
+                        <option value="be-BY">Belarusian</option>
+                        <option value="ar-SY">Arabic (Syria)</option>
+                        <option value="ar-KW">Arabic (Kuwait)</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="locationSelect" class="form-label">Select your location</label>
+                    <select class="form-select" id="locationSelect">
+                        <option value="SG">Singapore</option>
+                        <option value="MY">Malaysia</option>
+                        <option value="TH">Thailand</option>
+                        <option value="JP">Japan</option>
+                        <option value="KR">Korea</option>
+                        <option value="CN">China</option>
+                        <option value="BD">Bangladesh</option>
+                        <option value="IN">India</option>
+                        <option value="ID">Indonesia</option>
+                        <option value="LK">Sri Lanka</option>
+                        <option value="PH">Philippines</option>
+                        <option value="PL">Poland</option>
+                        <option value="RU">Russia</option>
+                        <option value="IR">Iran</option>
+                        <option value="TR">Türkiye</option>
+                        <option value="UA">Ukraine</option>
+                        <option value="AF">Afghanistan</option>
+                        <option value="IQ">Iraq</option>
+                        <option value="PK">Pakistan</option>
+                        <option value="UZ">Uzbekistan</option>
+                        <option value="BY">Belarus</option>
+                        <option value="SY">Syria</option>
+                        <option value="KW">Kuwait</option>
+                    </select>
+                </div>
+                <button type="button" class="btn btn-primary" id="confirmChanges">Confirm Changes</button>
+            </form>
+        </div>
+    </div>
+
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          const languageSelector = document.getElementById('languageSelector');
+          const languageSelect = document.getElementById('languageSelect');
+          const locationSelect = document.getElementById('locationSelect');
+          const confirmChangesButton = document.getElementById('confirmChanges');
+          const languageOffcanvas = document.getElementById('languageOffcanvas');
+    
+          // Load saved language and location from localStorage
+          const savedLanguage = localStorage.getItem('selectedLanguage');
+          const savedLocation = localStorage.getItem('selectedLocation');
+    
+          if (savedLanguage) {
+            languageSelect.value = savedLanguage;
+            languageSelector.innerText = savedLanguage === 'en-UK' ? 'EN (UK)' : 'EN (US)';
+          }
+          if (savedLocation) {
+            locationSelect.value = savedLocation;
+          }
+    
+          // Reset language and location to last confirmed values when the offcanvas is opened
+          languageOffcanvas.addEventListener('show.bs.offcanvas', function () {
+            if (savedLanguage) {
+              languageSelect.value = savedLanguage;
+            }
+            if (savedLocation) {
+              locationSelect.value = savedLocation;
+            }
+          });
+    
+          confirmChangesButton.addEventListener('click', function() {
+            const selectedLanguage = languageSelect.value;
+            const selectedLocation = locationSelect.value;
+    
+            if (selectedLanguage !== 'en-US') {
+              alert('Only English (US) is currently available.');
+              languageSelect.value = 'en-US'; // Default to English (UK)
+            } else {
+              // Save selected language and location to localStorage
+              localStorage.setItem('selectedLanguage', selectedLanguage);
+              localStorage.setItem('selectedLocation', selectedLocation);
+    
+              // Update language selector text
+              languageSelector.innerText = selectedLanguage === 'en-US' ? 'EN (US)' : 'EN (US)';
+    
+              // Alert the user of the successful change
+              alert('Language and location successfully changed.');
+    
+              // Redirect to homepage
+              window.location.href = 'features.html';
+            }
+          });
+        });
+      
+      </script>
+      
+  <h1 class="text-center my-5" style="font-family: 'Playfair Display', serif;"><strong>THE REMITEASE DIFFERENCE</strong></h1> 
+
+  <!-- Features Section -->
+  <div class="container">
+    <!-- Feature 1 -->
+    <div class="row feature-container">
+      <div class="col-md-6">
+        <img src="/images/fasttransfers.png" alt="Fast Processing Times" class="feature-image">
+      </div>
+      <div class="col-md-6 feature-text">
+        <div>
+          <h2><strong>FAST PROCESSING TIMES</strong></h2>
+          <h5><strong>Get used to skipping lines, transfers no longer take days to process.</strong> </h5>
+          <p>RemitEase Utilizes blockchain technology for near-instantaneous transfers, providing timelysupport to our users.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature 2 -->
+    <div class="row feature-container">
+      <div class="col-md-6 order-md-2">
+        <img src="/images/Low fees.png" alt="Low Transfer Fees" class="feature-image">
+      </div>
+      <div class="col-md-6 feature-text order-md-1">
+        <div>
+          <h2><strong>LOW TRANSFER FEES</strong></h2>
+          <h5><strong>Experience our services at a fixed fee rate of 0.3% for all transfers.</strong></h5>
+          <p>Through the use of blockchain technology it eliminates intermediaries, resulting in lower fees. Leading to significantly reduced fees compared to traditional remittance services, ensuring more money reaches the recipients.
+        </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature 3 -->
+    <div class="row feature-container">
+      <div class="col-md-6">
+        <img src="/images/userinterface.png" alt="user friendly interface" class="feature-image">
+      </div>
+      <div class="col-md-6 feature-text">
+        <div>
+          <h2><strong>USER-FRIENDLY INTERFACE</strong></h2>
+          <p>RemitEase offers an intuitive platform for initiating and tracking remittance transactions, making it easy for users to send and receive money.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature 4 -->
+    <div class="row feature-container">
+      <div class="col-md-6 order-md-2">
+        <img src="/images/customerservice.webp" alt="customer service" class="feature-image">
+      </div>
+      <div class="col-md-6 feature-text order-md-1">
+        <div>
+          <h2><strong>DEDICATED 24/7 SUPPORT</strong></h2>
+          <p>RemitEase provides dedicated customer support to assist users with any inquiries or issues they may encounter during the remittance process.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature 5 -->
+    <div class="row feature-container">
+        <div class="col-md-6">
+          <img src="/images/transparency.jpg" alt="transparency" class="feature-image">
+        </div>
+        <div class="col-md-6 feature-text order-md-1">
+          <div>
+            <h2><strong>TRANSPARENCY</strong></h2>
+            <h5><strong>No more hidden fees!</strong></h5>
+            <p>Blockchain data is immutable, which allows users to have transparent and traceable transactions.</p>
+          </div>
+        </div>
+      </div>
+
+  </div>
+
+  <div class="container my-5">
+    <h3 class="text-center"><strong>MAS REGULATIONS AND HOW WE ADHERE TO THEM</strong></h3>
+    <h5 class="text-center">At RemitEase, we are committed to upholding the highest standards of regulatory compliance and financial integrity. As a leading digital remittance platform, we understand the importance of adhering to the regulations set forth by the Monetary Authority of Singapore (MAS). Here’s how we ensure our operations align with MAS guidelines:</h5>
+    <br>
+    <nav class="text-center">
+      <ul class="nav nav-tabs justify-content-center">
+        <li class="nav-item">
+          <a class="nav-link active" data-bs-toggle="tab" href="#PSA">PSA</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab" href="#TRM">TRM</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab" href="#AML">AML</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab" href="#PDPA">PDPA</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab" href="#RISK">RISK MANAGEMENT PRACTICES</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab" href="#REPORT">REPORTING</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab" href="#PROFESSIONAL">PROFESSIONAL DEVELOPMENT</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab" href="#CUST">CUSTOMER PROTECTION</a>
+        </li>
+      </ul>
+    </nav>
+    <br>
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div class="tab-pane container active" id="PSA">
+        <h2><strong>PAYMENT SERVICES ACT</strong></h2>
+        <p>PSA is a regulatory body that oversees the remittance industry in Singapore. RemitEase is a licensed remittance service provider under the Payment Services Act (PSA) and is regulated by the Monetary Authority of Singapore (MAS). This ensures that we comply with the necessary regulations and standards to provide secure and reliable remittance services to our customers.</p>
+        <p>RemitEase is fully licensed and registered with the Monetary Authority of Singapore. We hold the necessary licenses required for conducting remittance services, ensuring that our operations meet all regulatory requirements. Our adherence to these licensing standards demonstrates our commitment to operating within the legal framework established by MAS.</p>
+      </div>
+      <div class="tab-pane container fade" id="TRM">
+        <h2><strong>TECHNOLOGY RISK MANAGEMENT</strong></h2>
+        <p>TRM is a regulatory body that oversees the remittance industry in Singapore. RemitEase is a licensed remittance service provider under the Payment Services Act (PSA) and is regulated by the Monetary Authority of Singapore (MAS). This ensures that we comply with the necessary regulations and standards to provide secure and reliable remittance services to our customers.</p>
+        <p>We implement robust Anti-Money Laundering (AML) and Countering the Financing of Terrorism (CFT) measures in accordance with MAS regulations. Our platform employs stringent Know Your Customer (KYC) processes to verify the identity of our users. This includes collecting and validating personal identification documents, monitoring transactions for suspicious activity, and reporting any discrepancies to the relevant authorities.</p>
+      </div>
+      <div class="tab-pane container fade" id="AML">
+        <h2><strong>ANTI-MONEY LAUNDERING</strong></h2>
+        <p>AML is a regulatory body that oversees the remittance industry in Singapore. RemitEase is a licensed remittance service provider under the Payment Services Act (PSA) and is regulated by the Monetary Authority of Singapore (MAS). This ensures that we comply with the necessary regulations and standards to provide secure and reliable remittance services to our customers.</p>
+        <p>Know Your Customer (KYC): Implement rigorous KYC processes to verify the identity of users. Collection and verification of identification documents. Continuous monitoring for suspicious activities. Utilize AI-powered systems to monitor transactions for signs of money laundering or terrorism financing. Real-time transaction analysis. Automated alerts for suspicious transactions. Adhere to MAS reporting requirements for suspicious transactions. Timely submission of suspicious transaction reports (STRs). Cooperation with regulatory authorities during investigations.</p>
+      </div>
+      <div class="tab-pane container fade" id="PDPA">
+        <h2><strong>PERSONAL DATA PROTECTION ACT</strong></h2>
+        <p>The PDPA refers to the Personal Data Protection Act. It is a data protection regulation mandated by the Monetary Authority of Singapore (MAS). The PDPA sets out rules and regulations for the collection, use, disclosure, and protection of personal data in Singapore. It aims to safeguard individuals' personal data and ensure that organizations handle personal data responsibly and securely. Compliance with the PDPA is crucial for organizations operating in Singapore to protect the privacy and rights of individuals.</p>
+        <p>RemitEase prioritizes the protection of our users' personal and financial information. We adhere to the Personal Data Protection Act (PDPA) and other relevant data protection regulations mandated by MAS. Our advanced security measures include encryption, secure data storage, and regular audits to safeguard user data against unauthorized access and breaches.</p>
+      </div>
+      <div class="tab-pane container fade" id="RISK">
+        <h2><strong>MAS NOTICE ON RISK MANAGEMENT PRACTICES FOR PAYMENT SERVICES</strong></h2>
+        <p>This notice provides guidelines on risk management practices for payment service providers. RemitEase’s risk management framework follows these guidelines to mitigate operational and financial risks.</p>
+        <p>Our comprehensive risk management framework aligns with MAS guidelines to identify, assess, and mitigate potential risks associated with our remittance services. This includes implementing internal controls, conducting regular risk assessments, and maintaining an effective system of checks and balances to ensure the integrity and stability of our operations.</p>
+      </div>
+      <div class="tab-pane container fade" id="REPORT">
+        <h2><strong>MAS REPORTING REQUIREMENTS</strong></h2>
+        <p>RemitEase is committed to maintaining transparency and accountability in our operations. We adhere to MAS reporting requirements and submit timely reports to regulatory authorities as mandated by law.</p>
+        <p>Our reporting practices are aligned with MAS Reporting Requirements to ensure accurate and timely reporting of financial transactions, suspicious activities, and other relevant information. We maintain detailed records of all transactions and activities on our platform to facilitate compliance with regulatory requirements and support regulatory oversight.</p>
+      </div>
+      <div class="tab-pane container fade" id="PROFESSIONAL">
+        <h2><strong>MAS GUIDELINES ON CONTINUING PROFESSIONAL DEVELOPMENT</strong></h2>
+        <p>RemitEase is committed to fostering a culture of continuous learning and professional development among our team members. We provide ongoing training and development opportunities to enhance the skills and knowledge of our employees.</p>
+        <p>Our team undergoes regular training and professional development programs to stay updated on the latest industry trends, regulatory requirements, and best practices. This ensures that our team members are well-equipped to provide high-quality service and support to our customers while maintaining compliance with regulatory standards.</p>
+      </div>
+      <div class="tab-pane container fade" id="CUST">
+        <h2><strong>MAS GUIDELINES ON CUSTOMER PROTECTION</strong></h2>
+        <p>RemitEase is committed to protecting the interests and rights of our customers. We prioritize customer satisfaction and strive to provide a safe and secure platform for remittance transactions.</p>
+        <p>Our customer protection measures include robust security protocols, data encryption, and fraud prevention mechanisms to safeguard user data and financial information. We also offer dedicated customer support to assist users with any inquiries or issues they may encounter during the remittance process. Our customer-centric approach ensures that our users receive the highest level of service and support.</p>
+      </div>
+    </div>
+  </div>
+  </nav>
+  
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+
+
+
