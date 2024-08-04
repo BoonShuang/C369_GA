@@ -96,15 +96,22 @@
       </div>
     </div>
     <div class="row mt-4">
-      <div class="col-md-6 clickable-container" onclick="window.location.href='accountChoice.html'">
-        <div class="currency-card" id="sgd-container">
+      <div class="col-md-4 clickable-container" onclick="window.location.href='accountChoice.html'">
+        <div class="currency-card" id="currency-SGD">
           <img src="/images/Flag_of_Singapore.svg" alt="SGD">
           <h3>SGD</h3>
           <p>0</p>
         </div>
       </div>
-      <div class="col-md-6 clickable-container" onclick="window.location.href='accountChoice.html'">
-        <div class="currency-card" id="open-container">
+      <div class="col-md-4 clickable-container" onclick="window.location.href='accountChoice.html'">
+        <div class="currency-card" id="currency-GBP">
+          <img src="/images/Flag_of_the_United_Kingdom.png" alt="GBP">
+          <h3>GBP</h3>
+          <p>0</p>
+        </div>
+      </div>
+      <div class="col-md-4 clickable-container" onclick="window.location.href='accountChoice.html'">
+        <div class="currency-card" id="currency-OPEN">
           <h3>OPEN</h3>
           <p>GROW, SAVE AND SPEND YOUR MONEY</p>
         </div>
@@ -169,7 +176,7 @@
                     <option value="PL">Poland</option>
                     <option value="RU">Russia</option>
                     <option value="IR">Iran</option>
-                    <option value="TR">Türkiye</option>
+                    <option value="TR">Turkey</option>
                     <option value="UA">Ukraine</option>
                     <option value="AF">Afghanistan</option>
                     <option value="IQ">Iraq</option>
@@ -185,58 +192,94 @@
     </div>
   </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const languageSelector = document.getElementById('languageSelector');
-    const languageSelect = document.getElementById('languageSelect');
-    const locationSelect = document.getElementById('locationSelect');
-    const confirmChangesButton = document.getElementById('confirmChanges');
-    const languageOffcanvas = document.getElementById('languageOffcanvas');
-
-    // Load saved language and location from localStorage
-    const savedLanguage = localStorage.getItem('selectedLanguage');
-    const savedLocation = localStorage.getItem('selectedLocation');
-
-    if (savedLanguage) {
-      languageSelect.value = savedLanguage;
-    }
-    if (savedLocation) {
-      languageSelect.value = savedLocation;
-    }
-
-    // Check for URL parameters and add GBP container if needed
-    const urlParams = new URLSearchParams(window.location.search);
-    const currency = urlParams.get('currency');
-
-    if (currency === 'GBP') {
-      const container = document.createElement('div');
-      container.className = 'col-md-6 clickable-container';
-      container.innerHTML = `
-        <div class="currency-card">
-          <img src="/images/Flag_of_the_United_Kingdom.png" alt="GBP">
-          <h3>GBP</h3>
-          <p>0</p>
-        </div>
-      `;
-      document.querySelector('.row.mt-4').appendChild(container);
-    }
-
-    confirmChangesButton.addEventListener('click', function() {
-      const selectedLanguage = languageSelect.value;
-      const selectedLocation = locationSelect.value;
-
-      localStorage.setItem('selectedLanguage', selectedLanguage);
-      localStorage.setItem('selectedLocation', selectedLocation);
-
-      languageSelector.innerHTML = `<img src="/images/Flag_of_Singapore.svg" alt="SG Flag"> ${selectedLanguage === 'en-US' ? 'EN' : selectedLanguage.toUpperCase()}`;
-
-      const offcanvas = bootstrap.Offcanvas.getInstance(languageOffcanvas);
-      offcanvas.hide();
-
-      window.location.href = 'index.html'; // Redirect to home page after confirming changes
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const languageSelector = document.getElementById('languageSelector');
+      const languageSelect = document.getElementById('languageSelect');
+      const locationSelect = document.getElementById('locationSelect');
+      const confirmChangesButton = document.getElementById('confirmChanges');
+      const languageOffcanvas = document.getElementById('languageOffcanvas');
+  
+      // Handle page load currency persistence
+      const currencySGD = document.getElementById('currency-SGD');
+      const currencyGBP = document.getElementById('currency-GBP');
+  
+      const storedSGD = localStorage.getItem('currency-SGD');
+      const storedGBP = localStorage.getItem('currency-GBP');
+  
+      if (storedSGD) {
+        currencySGD.querySelector('p').textContent = storedSGD;
+      } else {
+        currencySGD.querySelector('p').textContent = '0'; // Default value if not found
+      }
+  
+      if (storedGBP) {
+        currencyGBP.querySelector('p').textContent = storedGBP;
+      } else {
+        currencyGBP.querySelector('p').textContent = '0'; // Default value if not found
+      }
+  
+      // Load saved language and location from localStorage
+      const savedLanguage = localStorage.getItem('selectedLanguage');
+      const savedLocation = localStorage.getItem('selectedLocation');
+  
+      if (savedLanguage) {
+        languageSelect.value = savedLanguage;
+        languageSelector.innerText = savedLanguage === 'en-UK' ? 'EN (UK)' : 'EN (US)';
+      }
+      if (savedLocation) {
+        locationSelect.value = savedLocation;
+      }
+  
+      // Reset language and location to last confirmed values when the offcanvas is opened
+      languageOffcanvas.addEventListener('show.bs.offcanvas', function () {
+        if (savedLanguage) {
+          languageSelect.value = savedLanguage;
+        }
+        if (savedLocation) {
+          locationSelect.value = savedLocation;
+        }
+      });
+  
+      // Handle language change
+      confirmChangesButton.addEventListener('click', function() {
+        const selectedLanguage = languageSelect.value;
+        const selectedLocation = locationSelect.value;
+  
+        if (selectedLanguage !== 'en-US') {
+          alert('Only English (US) is currently available.');
+          languageSelect.value = 'en-US'; // Default to English (US)
+        } else {
+          // Save selected language and location to localStorage
+          localStorage.setItem('selectedLanguage', selectedLanguage);
+          localStorage.setItem('selectedLocation', selectedLocation);
+  
+          // Update language selector text
+          languageSelector.innerText = selectedLanguage === 'en-US' ? 'EN (US)' : 'EN (US)';
+  
+          // Alert the user of the successful change
+          alert('Language and location successfully changed.');
+  
+          // Redirect to homepage
+          window.location.href = 'index2.html';
+        }
+      });
+  
+      // Function to update currency values (for demonstration)
+      function updateCurrency(currency, amount) {
+        localStorage.setItem(`currency-${currency}`, amount);
+        const card = document.getElementById(`currency-${currency}`);
+        if (card) {
+          card.querySelector('p').textContent = amount;
+        }
+      }
+  
+      updateCurrency('SGD', '0');
+      updateCurrency('GBP', '0');
     });
-  });
+  </script>
+  
 </script>
 </body>
 </html>
