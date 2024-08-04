@@ -124,6 +124,16 @@
       border-radius: 8px;
       margin-top: 15px;
     }
+
+    .navbar-nav .nav-link img {
+      height: 20px;
+    }
+    .navbar-nav .nav-link .badge {
+      background-color: red;
+    }
+    .clickable-container {
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -149,10 +159,19 @@
         </ul>
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="#" data-bs-toggle="offcanvas" data-bs-target="#languageOffcanvas" aria-controls="languageOffcanvas" id="languageSelector">EN</a>
+            <a class="nav-link" href="#" data-bs-toggle="offcanvas" data-bs-target="#languageOffcanvas" aria-controls="languageOffcanvas" id="languageSelector">
+              <img src="/images/Flag_of_Singapore.svg" alt="SG Flag"> EN
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="login.html">Log In</a>
+            <a class="nav-link" href="#">
+              <img src="/images/notification-bell.svg" alt="Notifications"> <span class="badge">3</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <img src="/images/user_profile_icon.png" alt="User"> Tots
+            </a>
           </li>
         </ul>
       </div>
@@ -373,20 +392,3 @@
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
