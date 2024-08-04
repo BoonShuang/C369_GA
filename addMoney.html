@@ -124,16 +124,6 @@
       border-radius: 8px;
       margin-top: 15px;
     }
-
-    .navbar-nav .nav-link img {
-      height: 20px;
-    }
-    .navbar-nav .nav-link .badge {
-      background-color: red;
-    }
-    .clickable-container {
-      cursor: pointer;
-    }
   </style>
 </head>
 <body>
@@ -159,19 +149,10 @@
         </ul>
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="#" data-bs-toggle="offcanvas" data-bs-target="#languageOffcanvas" aria-controls="languageOffcanvas" id="languageSelector">
-              <img src="/images/Flag_of_Singapore.svg" alt="SG Flag"> EN
-            </a>
+            <a class="nav-link" href="#" data-bs-toggle="offcanvas" data-bs-target="#languageOffcanvas" aria-controls="languageOffcanvas" id="languageSelector">EN</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
-              <img src="/images/notification-bell.svg" alt="Notifications"> <span class="badge">3</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <img src="/images/user_profile_icon.png" alt="User"> Tots
-            </a>
+            <a class="nav-link" href="login.html">Log In</a>
           </li>
         </ul>
       </div>
@@ -308,20 +289,61 @@
           <button type="button" class="btn btn-primary mt-3 nextBtn" id="continueToPayment">Continue</button>
         </div>
 
-        <div id="paymentStep" class="hidden">
+        <div id="paymentContent" class="hidden">
           <div class="form-group">
-            <p><strong>Review your details:</strong></p>
-            <p><strong>Account to add to:</strong> <span id="reviewAccountToAdd">GBP</span></p>
-            <p><strong>Paying With:</strong> <span id="reviewPayingWith">Credit Card (5% fee)</span></p>
-            <p><strong>Currency to pay in:</strong> <span id="reviewCurrencyToPayIn">USD</span></p>
-            <p><strong>Top-up Amount:</strong> <span id="reviewTopUpAmount">£0.00</span></p>
-            <p><strong>Exchange Rate:</strong> <span id="reviewExchangeRate">1 GBP = 1.30 USD</span></p>
-            <p><strong>Fees:</strong> <span id="reviewFees">5%</span></p>
-            <p><strong>Total Amount to Pay:</strong> <span id="reviewTotalAmount">£0.00</span></p>
+            <label for="cardNumber">Credit Card Number</label>
+            <input type="text" class="form-control" id="cardNumber" required>
           </div>
-          <button type="button" class="btn btn-secondary mt-3 backBtn" id="backToVerification">Back</button>
+
+          <div class="form-group">
+            <label for="nameOnCard">Cardholder Name</label>
+            <input type="text" class="form-control" id="nameOnCard" required>
+          </div>
+
+          <div class="form-group">
+            <label for="expiryDate">Expiry Date</label>
+            <input type="text" class="form-control" id="expiryDate" required>
+          </div>
+
+          <div class="form-group">
+            <label for="cvv">CVV</label>
+            <input type="text" class="form-control" id="cvv" required>
+          </div>
+
           <button type="submit" class="btn btn-primary mt-3">Submit Payment</button>
         </div>
+        </form>
+              </form>
+            </div>
+          </div>
+
+          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+          <script>
+            document.addEventListener('DOMContentLoaded', function () {
+              const topUpAmountSection = document.getElementById('topUpAmountSection');
+              const amountSummary = document.getElementById('amountSummary');
+              const stepAmount = document.getElementById('stepAmount');
+              const stepVerification = document.getElementById('stepVerification');
+              const stepPayment = document.getElementById('stepPayment');
+              const stepContent = document.getElementById('stepContent');
+              const verificationContent = document.getElementById('verificationContent');
+              const paymentContent = document.getElementById('paymentContent');
+              const continueToVerification = document.getElementById('continueToVerification');
+              const continueToPayment = document.getElementById('continueToPayment');
+              const completePayment = document.getElementById('completePayment');
+              const topUpCurrency = document.getElementById('topUpCurrency');
+              const topUpAmount = document.getElementById('topUpAmount');
+              const accountToAdd = document.getElementById('accountToAdd');
+              const payingWith = document.getElementById('payingWith');
+              const currencyToPayIn = document.getElementById('currencyToPayIn');
+
+              const submitPaymentButton = document.querySelector('button[type="submit"]');
+              submitPaymentButton.addEventListener('click', function() {
+                alert('Payment is successful');
+                window.location.href = 'login3.html';
+              });
+            });
+          </script>
         </form>
       </form>
     </div>
@@ -392,3 +414,5 @@
   </script>
 </body>
 </html>
+
+
