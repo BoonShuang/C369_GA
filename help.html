@@ -28,7 +28,6 @@
   </style>
 </head>
 <body>
-  <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-light" style="background-color: aliceblue">
     <div class="container-fluid">
       <a class="navbar-brand" href="index.html">
@@ -131,7 +130,6 @@
     </div>
   </div>
 
-  <!-- FAQ Section -->
   <div class="container mt-5">
     <h2 class="text-center">FAQ</h2>
     <h4 class="text-center">Frequently Asked Questions</h4>
@@ -185,14 +183,12 @@
 </div>
 
 
-  <!-- Contact Us Button -->
   <div class="container mt-5 text-center">
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#contactFormModal">
       Contact Us
     </button>
   </div>
 
-  <!-- Contact Us Modal -->
   <div class="modal fade" id="contactFormModal" tabindex="-1" aria-labelledby="contactFormModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -230,7 +226,6 @@
       const confirmChangesButton = document.getElementById('confirmChanges');
       const languageOffcanvas = document.getElementById('languageOffcanvas');
   
-      // Load saved language and location from localStorage
       const savedLanguage = localStorage.getItem('selectedLanguage');
       const savedLocation = localStorage.getItem('selectedLocation');
   
@@ -242,7 +237,6 @@
         locationSelect.value = savedLocation;
       }
   
-      // Reset language and location to last confirmed values when the offcanvas is opened
       languageOffcanvas.addEventListener('show.bs.offcanvas', function () {
         if (savedLanguage) {
           languageSelect.value = savedLanguage;
@@ -260,17 +254,13 @@
           alert('Only English (US) is currently available.');
           languageSelect.value = 'en-US'; // Default to English (UK)
         } else {
-          // Save selected language and location to localStorage
           localStorage.setItem('selectedLanguage', selectedLanguage);
           localStorage.setItem('selectedLocation', selectedLocation);
   
-          // Update language selector text
           languageSelector.innerText = selectedLanguage === 'en-US' ? 'EN (US)' : 'EN (US)';
   
-          // Alert the user of the successful change
           alert('Language and location successfully changed.');
   
-          // Redirect to homepage
           window.location.href = 'help.html';
         }
       });

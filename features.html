@@ -30,7 +30,6 @@
   </style>
 </head>
 <body>
-  <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-light" style="background-color: aliceblue;">
     <div class="container-fluid">
       <a class="navbar-brand" href="index.html">
@@ -66,7 +65,6 @@
     </div>
   </nav>
   
-    <!-- Offcanvas for Language and Location -->
     <div class="offcanvas offcanvas-end" tabindex="-1" id="languageOffcanvas" aria-labelledby="languageOffcanvasLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="languageOffcanvasLabel">Select Location and Language</h5>
@@ -143,7 +141,6 @@
           const confirmChangesButton = document.getElementById('confirmChanges');
           const languageOffcanvas = document.getElementById('languageOffcanvas');
     
-          // Load saved language and location from localStorage
           const savedLanguage = localStorage.getItem('selectedLanguage');
           const savedLocation = localStorage.getItem('selectedLocation');
     
@@ -155,7 +152,6 @@
             locationSelect.value = savedLocation;
           }
     
-          // Reset language and location to last confirmed values when the offcanvas is opened
           languageOffcanvas.addEventListener('show.bs.offcanvas', function () {
             if (savedLanguage) {
               languageSelect.value = savedLanguage;
@@ -171,19 +167,15 @@
     
             if (selectedLanguage !== 'en-US') {
               alert('Only English (US) is currently available.');
-              languageSelect.value = 'en-US'; // Default to English (UK)
+              languageSelect.value = 'en-US'; 
             } else {
-              // Save selected language and location to localStorage
               localStorage.setItem('selectedLanguage', selectedLanguage);
               localStorage.setItem('selectedLocation', selectedLocation);
     
-              // Update language selector text
               languageSelector.innerText = selectedLanguage === 'en-US' ? 'EN (US)' : 'EN (US)';
     
-              // Alert the user of the successful change
               alert('Language and location successfully changed.');
     
-              // Redirect to homepage
               window.location.href = 'features.html';
             }
           });
@@ -193,9 +185,8 @@
       
   <h1 class="text-center my-5" style="font-family: 'Playfair Display', serif;"><strong>THE REMITEASE DIFFERENCE</strong></h1> 
 
-  <!-- Features Section -->
   <div class="container">
-    <!-- Feature 1 -->
+
     <div class="row feature-container">
       <div class="col-md-6">
         <img src="/images/fasttransfers.png" alt="Fast Processing Times" class="feature-image">
@@ -224,7 +215,6 @@
       </div>
     </div>
 
-    <!-- Feature 3 -->
     <div class="row feature-container">
       <div class="col-md-6">
         <img src="/images/userinterface.png" alt="user friendly interface" class="feature-image">
@@ -237,7 +227,6 @@
       </div>
     </div>
 
-    <!-- Feature 4 -->
     <div class="row feature-container">
       <div class="col-md-6 order-md-2">
         <img src="/images/customerservice.webp" alt="customer service" class="feature-image">
@@ -299,7 +288,7 @@
       </ul>
     </nav>
     <br>
-    <!-- Tab panes -->
+
     <div class="tab-content">
       <div class="tab-pane container active" id="PSA">
         <h2><strong>PAYMENT SERVICES ACT</strong></h2>
