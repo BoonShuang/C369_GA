@@ -107,7 +107,7 @@
         <div class="currency-card" id="currency-GBP">
           <img src="/images/Flag_of_the_United_Kingdom.png" alt="GBP">
           <h3>GBP</h3>
-          <p>5000</p>
+          <p>0</p>
         </div>
       </div>
       <div class="col-md-4 clickable-container" onclick="window.location.href='accountChoice.html'">
@@ -132,10 +132,17 @@
         <tbody>
           <tr>
             <td>G832IQ9SH</td>
-            <td>5/06/2024</td>
+            <td>5/08/2024</td>
             <td>Top Up</td>
             <td>5000 GBP</td>
             <td class="text-success">Delivered</td>
+          </tr>
+          <tr>
+            <td>H789NK65R</td>
+            <td>5/08/2024</td>
+            <td>Send</td>
+            <td>532721.28 INR</td>
+            <td class="text-warning">In progress</td>
           </tr>
         </tbody>
       </table>
@@ -186,121 +193,18 @@
                     <option value="SG">Singapore</option>
                     <option value="MY">Malaysia</option>
                     <option value="TH">Thailand</option>
-                    <option value="JP">Japan</option>
-                    <option value="KR">Korea</option>
-                    <option value="CN">China</option>
-                    <option value="BD">Bangladesh</option>
-                    <option value="IN">India</option>
                     <option value="ID">Indonesia</option>
-                    <option value="LK">Sri Lanka</option>
                     <option value="PH">Philippines</option>
-                    <option value="PL">Poland</option>
-                    <option value="RU">Russia</option>
-                    <option value="IR">Iran</option>
-                    <option value="TR">Turkey</option>
-                    <option value="UA">Ukraine</option>
-                    <option value="AF">Afghanistan</option>
-                    <option value="IQ">Iraq</option>
+                    <option value="IN">India</option>
                     <option value="PK">Pakistan</option>
-                    <option value="UZ">Uzbekistan</option>
-                    <option value="BY">Belarus</option>
-                    <option value="SY">Syria</option>
-                    <option value="KW">Kuwait</option>
+                    <option value="BD">Bangladesh</option>
                 </select>
             </div>
-            <button type="button" class="btn btn-primary" id="confirmChanges">Confirm Changes</button>
+            <button type="submit" class="btn btn-primary">Confirm</button>
         </form>
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const languageSelector = document.getElementById('languageSelector');
-      const languageSelect = document.getElementById('languageSelect');
-      const locationSelect = document.getElementById('locationSelect');
-      const confirmChangesButton = document.getElementById('confirmChanges');
-      const languageOffcanvas = document.getElementById('languageOffcanvas');
-  
-      // Handle page load currency persistence
-      const currencySGD = document.getElementById('currency-SGD');
-      const currencyGBP = document.getElementById('currency-GBP');
-  
-      const storedSGD = localStorage.getItem('currency-SGD');
-      const storedGBP = localStorage.getItem('currency-GBP');
-  
-      if (storedSGD) {
-        currencySGD.querySelector('p').textContent = storedSGD;
-      } else {
-        currencySGD.querySelector('p').textContent = '0'; // Default value if not found
-      }
-  
-      if (storedGBP) {
-        currencyGBP.querySelector('p').textContent = storedGBP;
-      } else {
-        currencyGBP.querySelector('p').textContent = '0'; // Default value if not found
-      }
-  
-      // Load saved language and location from localStorage
-      const savedLanguage = localStorage.getItem('selectedLanguage');
-      const savedLocation = localStorage.getItem('selectedLocation');
-  
-      if (savedLanguage) {
-        languageSelect.value = savedLanguage;
-        languageSelector.innerText = savedLanguage === 'en-UK' ? 'EN (UK)' : 'EN (US)';
-      }
-      if (savedLocation) {
-        locationSelect.value = savedLocation;
-      }
-  
-      // Reset language and location to last confirmed values when the offcanvas is opened
-      languageOffcanvas.addEventListener('show.bs.offcanvas', function () {
-        if (savedLanguage) {
-          languageSelect.value = savedLanguage;
-        }
-        if (savedLocation) {
-          locationSelect.value = savedLocation;
-        }
-      });
-  
-      // Handle language change
-      confirmChangesButton.addEventListener('click', function() {
-        const selectedLanguage = languageSelect.value;
-        const selectedLocation = locationSelect.value;
-  
-        if (selectedLanguage !== 'en-US') {
-          alert('Only English (US) is currently available.');
-          languageSelect.value = 'en-US'; // Default to English (US)
-        } else {
-          // Save selected language and location to localStorage
-          localStorage.setItem('selectedLanguage', selectedLanguage);
-          localStorage.setItem('selectedLocation', selectedLocation);
-  
-          // Update language selector text
-          languageSelector.innerText = selectedLanguage === 'en-US' ? 'EN (US)' : 'EN (US)';
-  
-          // Alert the user of the successful change
-          alert('Language and location successfully changed.');
-  
-          // Redirect to homepage
-          window.location.href = 'index2.html';
-        }
-      });
-  
-      // Function to update currency values 
-      function updateCurrency(currency, amount) {
-        localStorage.setItem(`currency-${currency}`, amount);
-        const card = document.getElementById(`currency-${currency}`);
-        if (card) {
-          card.querySelector('p').textContent = amount;
-        }
-      }
-  
-      updateCurrency('SGD', '0');
-      updateCurrency('GBP', '5000');
-    });
-  </script>
-  
-
 </body>
 </html>
